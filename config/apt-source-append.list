@@ -1,18 +1,17 @@
 # Additional sources will be added here to help control the
 # versions of various packages that are installed
 
-# Provides SVN 1.7.9
-deb http://ppa.launchpad.net/svn/ppa/ubuntu precise main 
-deb-src http://ppa.launchpad.net/svn/ppa/ubuntu precise main
-
-# Provides PHP 5.4
-deb http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu precise main
-deb-src http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu precise main
-
-# Provides Git 1.8
-deb http://ppa.launchpad.net/git-core/ppa/ubuntu precise main 
-deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu precise main
+# Provides PageSpeed, but once installed PageSpeed adds its PPA to /etc/apt/sources.list.d
+#deb http://dl.google.com/linux/mod-pagespeed/deb/ stable main
 
 # Provides Node.js
-deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main
-deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main
+deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu trusty main
+deb-src http://ppa.launchpad.net/chris-lea/node.js/ubuntu trusty main
+
+# Multiverse
+deb http://archive.ubuntu.com/ubuntu trusty multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty multiverse
+deb http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+deb-src http://archive.ubuntu.com/ubuntu trusty-updates multiverse
+deb http://security.ubuntu.com/ubuntu trusty-security multiverse
+deb-src http://security.ubuntu.com/ubuntu trusty-security multiverse
