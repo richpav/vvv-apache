@@ -18,7 +18,7 @@ start_seconds="$(date +%s)"
 # bunch of errors.
 ping_result="$(ping -c 2 8.8.4.4 2>&1)"
 if [[ $ping_result != *bytes?from* ]]; then
-	ping_result="$(ping -c 2 4.2.2.2 2>&1)"
+    ping_result="$(ping -c 2 4.2.2.2 2>&1)"
 fi
 
 # PACKAGE INSTALLATION
@@ -35,67 +35,72 @@ apt_package_install_list=()
 # status before adding them to the apt_package_install_list array.
 apt_package_check_list=(
 
-	# PHP5
-	#
-	# Our base packages for php5. As long as php5-fpm and php5-cli are
-	# installed, there is no need to install the general php5 package, which
-	# can sometimes install apache as a requirement.
-	php5-fpm
-	php5-cli
+    # PHP5
+    #
+    # Our base packages for php5. As long as php5-fpm and php5-cli are
+    # installed, there is no need to install the general php5 package, which
+    # can sometimes install apache as a requirement.
+    php5-fpm
+    php5-cli
 
-	# Common and dev packages for php
-	php5-common
-	php5-dev
+    # Common and dev packages for php
+    php5-common
+    php5-dev
 
-	# Extra PHP modules that we find useful
-	php5-memcache
-	php5-imagick
-	php5-xdebug
-	php5-mcrypt
-	php5-mysql
-	php5-imap
-	php5-curl
-	php-pear
-	php5-gd
-	php-apc
-	php5
+    # Extra PHP modules that we find useful
+    php5-memcache
+    php5-imagick
+    php5-mcrypt
+    php5-mysql
+    php5-imap
+    php5-curl
+    php-pear
+    php5-gd
+    mod-pagespeed-stable
 
-	# Apache is installed as the default web server
-	apache2-mpm-worker
-	libapache2-mod-fastcgi
+    # Apache is installed as the default web server
+    apache2-mpm-worker
+    libapache2-mod-fastcgi
+    apache2-dev
 
-	# memcached is made available for object caching
-	memcached
+    # memcached is made available for object caching
+    memcached
 
-	# mysql is the default database
-	mysql-server
+    # mysql is the default database
+    mysql-server
 
-	# other packages that come in handy
-	imagemagick
-	subversion
-	git-core
-	unzip
-	ngrep
-	curl
-	make
-	vim
-	colordiff
-	postfix
+    # other packages that come in handy
+    imagemagick
+    subversion
+    git-core
+    zip
+    unzip
+    ngrep
+    curl
+    make
+    vim
+    colordiff
+    postfix
+    tree
 
-	# Req'd for i18n tools
-	gettext
+    # Req'd for i18n tools
+    gettext
 
-	# Req'd for Webgrind
-	graphviz
+    # Req'd for Webgrind
+    graphviz
 
-	# dos2unix
-	# Allows conversion of DOS style line endings to something we'll have less
-	# trouble with in Linux.
-	dos2unix
+    # dos2unix
+    # Allows conversion of DOS style line endings to something we'll have less
+    # trouble with in Linux.
+    dos2unix
 
-	# nodejs for use by grunt
-	g++
-	nodejs
+    # nodejs for use by grunt
+    g++
+    nodejs
+
+    # NFS
+    nfs-common
+    portmap
 )
 
 echo "Check for apt packages to install..."
