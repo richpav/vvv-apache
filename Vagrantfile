@@ -83,6 +83,10 @@ Vagrant.configure("2") do |config|
   # for those as well. This includes other Vagrant boxes.
   config.vm.network :private_network, ip: "192.168.50.4"
 
+  # NFS configuration
+  config.nfs.map_uid = Process.uid
+  config.nfs.map_gid = Process.gid
+
   # Drive mapping
   #
   # The following config.vm.synced_folder settings will map directories in your Vagrant
@@ -98,11 +102,20 @@ Vagrant.configure("2") do |config|
   # a mapped directory inside the VM will be created that contains these files.
   # This directory is used to maintain default database scripts as well as backed
   # up mysql dumps (SQL files) that are to be imported automatically on vagrant up
-  config.vm.synced_folder "database/", "/srv/database"
-  if vagrant_version >= "1.3.0"
-    config.vm.synced_folder "database/data/", "/var/lib/mysql", :mount_options => [ "dmode=777", "fmode=777" ]
-  else
-    config.vm.synced_folder "database/data/", "/var/lib/mysql", :extra => 'dmode=777,fmode=777'
+  config.vm.synced_folder "database/", "/srv/database", type: "nfs"
+
+  # If the mysql_upgrade_info file from a previous persistent database mapping is detected,
+  # we'll continue to map that directory as /var/lib/mysql inside the virtual machine. Once
+  # this file is changed or removed, this mapping will no longer occur. A db_backup command
+  # is now available inside the virtual machine to backup all databases for future use. This
+  # command is automatically issued on halt, suspend, and destroy if the vagrant-triggers
+  # plugin is installed.
+  if File.exists?(File.join(vagrant_dir,'database/data/mysql_upgrade_info')) then
+    if vagrant_version >= "1.3.0"
+      config.vm.synced_folder "database/data/", "/var/lib/mysql", type: "nfs"
+    else
+      config.vm.synced_folder "database/data/", "/var/lib/mysql", type: "nfs"
+    end
   end
 
   # /srv/config/
@@ -111,17 +124,23 @@ Vagrant.configure("2") do |config|
   # a mapped directory inside the VM will be created that contains these files.
   # This directory is currently used to maintain various config files for php and
   # Apache as well as any pre-existing database files.
-  config.vm.synced_folder "config/", "/srv/config"
+  config.vm.synced_folder "config/", "/srv/config", type: "nfs"
+
+  # /srv/log/
+  #
+  # If a log directory exists in the same directory as your Vagrantfile, a mapped
+  # directory inside the VM will be created for some generated log files.
+  config.vm.synced_folder "log/", "/srv/log", type: "nfs"
 
   # /srv/www/
   #
   # If a www directory exists in the same directory as your Vagrantfile, a mapped directory
-  # inside the VM will be created that acts as the default location for Apache sites. Put all
+  # inside the VM will be created that acts as the default location for nginx sites. Put all
   # of your project files here that you want to access through the web server
   if vagrant_version >= "1.3.0"
-    config.vm.synced_folder "www/", "/srv/www/", :owner => "www-data", :mount_options => [ "dmode=775", "fmode=774" ]
+    config.vm.synced_folder "www/", "/srv/www/", type: "nfs"
   else
-    config.vm.synced_folder "www/", "/srv/www/", :owner => "www-data", :extra => 'dmode=775,fmode=774'
+    config.vm.synced_folder "www/", "/srv/www/", type: "nfs"
   end
 
   # Customfile - POSSIBLY UNSTABLE
