@@ -256,7 +256,6 @@ unlink /etc/apache2/conf.d/php5-fpm.conf
 unlink /etc/php5/fpm/pool.d/www.conf
 unlink /etc/php5/fpm/conf.d/php-custom.ini
 unlink /etc/php5/fpm/conf.d/xdebug.ini
-unlink /etc/php5/fpm/conf.d/apc.ini
 unlink /etc/memcached.conf
 unlink /home/vagrant/.bash_profile
 unlink /home/vagrant/.bash_prompt
