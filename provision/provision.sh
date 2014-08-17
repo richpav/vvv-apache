@@ -259,6 +259,7 @@ unlink /etc/php5/fpm/conf.d/xdebug.ini
 unlink /etc/php5/fpm/conf.d/apc.ini
 unlink /etc/memcached.conf
 unlink /home/vagrant/.bash_profile
+unlink /home/vagrant/.bash_prompt
 unlink /home/vagrant/.bash_aliases
 unlink /home/vagrant/.vimrc
 
@@ -307,6 +308,7 @@ echo " * /srv/config/memcached-config/memcached.conf   -> /etc/memcached.conf"
 # Copy custom dotfiles and bin file for the vagrant user from local
 cp /srv/config/bash_profile /home/vagrant/.bash_profile
 cp /srv/config/bash_aliases /home/vagrant/.bash_aliases
+cp /srv/config/bash_prompt /home/vagrant/.bash_prompt
 cp /srv/config/vimrc /home/vagrant/.vimrc
 if [[ ! -d /home/vagrant/.subversion ]]; then
     mkdir /home/vagrant/.subversion
