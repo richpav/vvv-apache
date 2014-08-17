@@ -1,3 +1,62 @@
+# vvv-apache-nfs-pagespeed
+
+I opened vvv-apache in one window and VVV in another and frankensteined together this version. I still barely know my ass from my elbow, but it all seems to work.
+
+### NFS configuration
+
+It's not too difficult to modify a vanilla VVV clone to configure mounting shares with NFS instead of the default. The performance improvement is amazing.
+
+#### provision.sh
+
+I'm not sure whether or not these packages are part of a default Ubuntu Trusty64 install, but I add them anyway.
+
+    # NFS
+    nfs-common
+    portmap
+
+#### Vagrantfile
+
+This configuration sets the global default NFS folder UID and GID to the ID of the user on your host machine. I got it from [here](https://coderwall.com/p/3ha9dw).
+
+    config.nfs.map_uid = Process.uid
+    config.nfs.map_gid = Process.gid
+
+I get the feeling there's more I need to do with ownership of the shares...
+
+I modified the share configs as follows. They work, but I had to remove `:mount_options => [ "dmode=777", "fmode=777" ]` and `:owner => "www-data"` settings from some of them because NFS doesn't support those settings. They're most likely necessary for something, but I haven't yet discovered what I broke.
+
+    # /srv/database/
+    config.vm.synced_folder "database/", "/srv/database", type: "nfs"
+
+    if File.exists?(File.join(vagrant_dir,'database/data/mysql_upgrade_info')) then
+      if vagrant_version >= "1.3.0"
+        config.vm.synced_folder "database/data/", "/var/lib/mysql", type: "nfs"
+      else
+        config.vm.synced_folder "database/data/", "/var/lib/mysql", type: "nfs"
+      end
+    end
+----
+    # /srv/config/
+    config.vm.synced_folder "config/", "/srv/config", type: "nfs"
+----
+    # /srv/log/
+      config.vm.synced_folder "log/", "/srv/log", type: "nfs"
+----
+    # /srv/www/
+    if vagrant_version >= "1.3.0"
+      config.vm.synced_folder "www/", "/srv/www/", type: "nfs"
+    else
+      config.vm.synced_folder "www/", "/srv/www/", type: "nfs"
+    end
+
+### PageSpeed
+
+I added Google's PPA to `apt-source-append.list` and `mod-pagespeed-stable` to `provision.sh`, but there are two problems:
+* PageSpeed creates `/etc/apache2/conf.d` which is necessary for Apache 2.4 to install properly. So if PageSpeed isn't installed, Apache can't be installed and the rest of provisioning also goes to hell in a handbag.
+* PageSpeed adds its PPA to apt-source, so after it's installed you have to comment out the one in `apt-source-append.list`.
+
+The rest below is from the original readme.me
+
 # Varying Vagrant Vagrants - Apache Edition
 
 Varying Vagrant Vagrants is an evolving [Vagrant](http://vagrantup.com) configuration focused on [WordPress](http://wordpress.org) development.
