@@ -60,8 +60,8 @@ apt_package_check_list=(
 
     # Apache is installed as the default web server
     apache2-mpm-worker
-    libapache2-mod-fastcgi
-    apache2-dev
+    # libapache2-mod-fastcgi
+    # TODO: Is this necessary? apache2-dev
 
     # memcached is made available for object caching
     memcached
@@ -255,7 +255,8 @@ unlink /etc/apache2/apache2.conf
 unlink /etc/apache2/conf.d/php5-fpm.conf
 unlink /etc/php5/fpm/pool.d/www.conf
 unlink /etc/php5/fpm/conf.d/php-custom.ini
-unlink /etc/php5/fpm/conf.d/xdebug.ini
+#unlink /etc/php5/fpm/conf.d/xdebug.ini
+unlink /etc/php5/mods-available/xdebug.ini
 unlink /etc/memcached.conf
 unlink /home/vagrant/.bash_profile
 unlink /home/vagrant/.bash_prompt
@@ -276,8 +277,9 @@ echo " * /srv/config/apache-config/apache2.conf         -> /etc/apache2/apache2.
 echo " * /srv/config/apache-config/php-fpm.conf         -> /etc/apache2/conf.d/php-fpm.conf"
 echo " * /srv/config/apache-config/sites/               -> /etc/apache2/custom-sites/"
 
-# Configure Apache for PHP-FPM
-a2enmod actions fastcgi alias
+# Configure Apache for mod_proxy_fcgi
+# http://www.geoffstratton.com/2014/05/ubuntu-14-apache-php/
+a2enmod proxy_fcgi # this also enables mod_proxy
 
 # Enable mod_rewrite
 a2enmod rewrite
