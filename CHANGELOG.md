@@ -1,3 +1,16 @@
+### 1.0.1
+* Added Sexy bash prompt
+* Removed APC configs.
+* mod_proxy_fcgi replaces FastCGI
+* Incorporated latest VVV updates
+
+# vvv-apache-nfs-pagespeed Changelog
+### 1.0
+* Updated to Ubuntu 14.04.01 x64, ergo Apache 2.4 and no more APC.
+* Added Google PageSpeed.
+* Shares mounted with NFS
+* Added some php5-fpm-config files from Apache-VVV that I overlooked.
+
 # Varying Vagrant Vagrants Changelog
 
 ## 1.0.1
