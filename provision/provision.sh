@@ -151,17 +151,17 @@ if [[ $ping_result == *bytes?from* ]]; then
         # the packages that we are installing from non standard sources via
         # our appended apt source.list
 
-		# Launchpad Subversion key EAA903E3A2F4C039
-		gpg -q --keyserver keyserver.ubuntu.com --recv-key EAA903E3A2F4C039
-		gpg -q -a --export EAA903E3A2F4C039 | apt-key add -
+	      # Launchpad Subversion key EAA903E3A2F4C039
+		    gpg -q --keyserver keyserver.ubuntu.com --recv-key EAA903E3A2F4C039
+		    gpg -q -a --export EAA903E3A2F4C039 | apt-key add -
 
-		# Launchpad PHP key 4F4EA0AAE5267A6C
-		gpg -q --keyserver keyserver.ubuntu.com --recv-key 4F4EA0AAE5267A6C
-		gpg -q -a --export 4F4EA0AAE5267A6C | apt-key add -
+		    # Launchpad PHP key 4F4EA0AAE5267A6C
+		    gpg -q --keyserver keyserver.ubuntu.com --recv-key 4F4EA0AAE5267A6C
+		    gpg -q -a --export 4F4EA0AAE5267A6C | apt-key add -
 
-		# Launchpad git key A1715D88E1DF1F24
-		gpg -q --keyserver keyserver.ubuntu.com --recv-key A1715D88E1DF1F24
-		gpg -q -a --export A1715D88E1DF1F24 | apt-key add -
+		    # Launchpad git key A1715D88E1DF1F24
+		    gpg -q --keyserver keyserver.ubuntu.com --recv-key A1715D88E1DF1F24
+		    gpg -q -a --export A1715D88E1DF1F24 | apt-key add -
 
         # Launchpad nodejs key C7917B12
         gpg -q --keyserver keyserver.ubuntu.com --recv-key C7917B12
@@ -201,14 +201,14 @@ if [[ $ping_result == *bytes?from* ]]; then
         echo "ack-grep already installed"
     else
         echo "Installing ack-grep as ack"
-        curl -s http://beyondgrep.com/ack-2.04-single-file > /usr/bin/ack && chmod +x /usr/bin/ack
+        curl -s http://beyondgrep.com/ack-2.14-single-file > /usr/bin/ack && chmod +x /usr/bin/ack
     fi
 
     # COMPOSER
     #
     # Install or Update Composer based on current state. Updates are direct from
     # master branch on GitHub repository.
-    if [[ -n "$(composer --version | grep -q 'Composer version')" ]]; then
+    if [[ -n "$(composer --version --no-ansi | grep 'Composer version')" ]]; then
         echo "Updating Composer..."
         COMPOSER_HOME=/usr/local/src/composer composer self-update
         COMPOSER_HOME=/usr/local/src/composer composer global update
@@ -218,10 +218,10 @@ if [[ $ping_result == *bytes?from* ]]; then
         chmod +x composer.phar
         mv composer.phar /usr/local/bin/composer
 
-        COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/phpunit:4.0.*
+		    COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/phpunit:4.2.*
         COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update phpunit/php-invoker:1.1.*
-        COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update mockery/mockery:0.8.*
-        COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update d11wtq/boris:v1.0.2
+		    COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update mockery/mockery:0.9.*
+		    COMPOSER_HOME=/usr/local/src/composer composer -q global require --no-update d11wtq/boris:v1.0.8
         COMPOSER_HOME=/usr/local/src/composer composer -q global config bin-dir /usr/local/bin
         COMPOSER_HOME=/usr/local/src/composer composer global update
     fi
@@ -478,7 +478,7 @@ if [[ $ping_result == *bytes?from* ]]; then
     if [[ ! -d /srv/www/wordpress-default ]]; then
         echo "Downloading WordPress Stable, see http://wordpress.org/"
         cd /srv/www/
-        curl -O http://wordpress.org/latest.tar.gz
+        curl -L -O https://wordpress.org/latest.tar.gz
         tar -xvf latest.tar.gz
         mv wordpress wordpress-default
         rm latest.tar.gz
@@ -563,9 +563,9 @@ PHP
     if [[ ! -d /srv/www/default/database-admin ]]; then
         echo "Downloading phpMyAdmin 4.2.7.1..."
         cd /srv/www/default
-        wget -q -O phpmyadmin.tar.gz 'http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.7.1/phpMyAdmin-4.2.7.1-all-languages.tar.gz/download'
+        wget -q -O phpmyadmin.tar.gz 'http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.9/phpMyAdmin-4.2.9-all-languages.tar.gz/download'
         tar -xf phpmyadmin.tar.gz
-        mv phpMyAdmin-4.2.7.1-all-languages database-admin
+        mv phpMyAdmin-4.2.9-all-languages database-admin
         rm phpmyadmin.tar.gz
     else
         echo "PHPMyAdmin already installed."
