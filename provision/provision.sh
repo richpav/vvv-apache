@@ -252,7 +252,6 @@ fi
 # that this section will be removed after everyone has had a fair chance. With
 # a `vagrant destroy`, none of this is necessary.
 unlink /etc/apache2/apache2.conf
-unlink /etc/apache2/conf.d/php5-fpm.conf
 unlink /etc/php5/fpm/pool.d/www.conf
 unlink /etc/php5/fpm/conf.d/php-custom.ini
 #unlink /etc/php5/fpm/conf.d/xdebug.ini
@@ -270,11 +269,9 @@ echo " * /srv/config/init/vvv-start.conf               -> /etc/init/vvv-start.co
 
 # Copy Apache configuration from local
 cp /srv/config/apache-config/apache2.conf /etc/apache2/apache2.conf
-cp /srv/config/apache-config/php5-fpm.conf /etc/apache2/conf.d/php5-fpm.conf
 rsync -rvzh --delete /srv/config/apache-config/sites/ /etc/apache2/custom-sites/
 
 echo " * /srv/config/apache-config/apache2.conf         -> /etc/apache2/apache2.conf"
-echo " * /srv/config/apache-config/php-fpm.conf         -> /etc/apache2/conf.d/php-fpm.conf"
 echo " * /srv/config/apache-config/sites/               -> /etc/apache2/custom-sites/"
 
 # Configure Apache for mod_proxy_fcgi
@@ -285,7 +282,7 @@ a2enmod proxy_fcgi # this also enables mod_proxy
 a2enmod rewrite
 
 # Copy php-fpm configuration from local
-cp /srv/config/php5-fpm-config/php5-fpm.conf /etc/php5/fpm/php5-fpm.conf
+cp /srv/config/php5-fpm-config/php-fpm.conf /etc/php5/fpm/php-fpm.conf
 cp /srv/config/php5-fpm-config/www.conf /etc/php5/fpm/pool.d/www.conf
 cp /srv/config/php5-fpm-config/php-custom.ini /etc/php5/fpm/conf.d/php-custom.ini
 cp /srv/config/php5-fpm-config/opcache.ini /etc/php5/fpm/conf.d/opcache.ini
@@ -295,7 +292,7 @@ cp /srv/config/php5-fpm-config/xdebug.ini /etc/php5/mods-available/xdebug.ini
 XDEBUG_PATH=$( find /usr -name 'xdebug.so' | head -1 )
 sed -i "1izend_extension=\"$XDEBUG_PATH\"" /etc/php5/mods-available/xdebug.ini
 
-echo " * /srv/config/php5-fpm-config/php5-fpm.conf     -> /etc/php5/fpm/php5-fpm.conf"
+echo " * /srv/config/php5-fpm-config/php-fpm.conf     -> /etc/php5/fpm/php-fpm.conf"
 echo " * /srv/config/php5-fpm-config/www.conf          -> /etc/php5/fpm/pool.d/www.conf"
 echo " * /srv/config/php5-fpm-config/php-custom.ini    -> /etc/php5/fpm/conf.d/php-custom.ini"
 echo " * /srv/config/php5-fpm-config/opcache.ini       -> /etc/php5/fpm/conf.d/opcache.ini"

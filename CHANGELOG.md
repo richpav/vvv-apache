@@ -1,10 +1,17 @@
+# vvv-apache-nfs-pagespeed-mod_proxy_fcgi Changelog
+
+### 1.1.0
+* mod_proxy_fcgi is really working now.
+* ack-2.14
+* phpMyAdmin-4.2.9
+* Latest updates from VVV
+
 ### 1.0.1
 * Added Sexy bash prompt
 * Removed APC configs.
-* mod_proxy_fcgi replaces FastCGI
+* mod_proxy_fcgi replaces FastCGI (mod_fastcgi.c)
 * Incorporated latest VVV updates
 
-# vvv-apache-nfs-pagespeed Changelog
 ### 1.0
 * Updated to Ubuntu 14.04.01 x64, ergo Apache 2.4 and no more APC.
 * Added Google PageSpeed.
