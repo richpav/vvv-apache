@@ -1,4 +1,4 @@
-## vvv-apache-nfs-pagespeed-mod_proxy_fcgi
+## vvv-precise64-apache-nfs-pagespeed-mod_proxy_fcgi
 
 Things are messy in a few spots, but it all seems to be working.
 
@@ -8,7 +8,7 @@ It's not too difficult to modify a vanilla VVV clone to configure mounting share
 
 #### provision.sh
 
-I'm not sure whether or not these packages are part of a default Ubuntu Trusty64 install, but I add them anyway.
+I'm not sure whether or not these packages are part of a default Ubuntu Precise64 install, but I add them anyway.
 
     # NFS
     nfs-common
